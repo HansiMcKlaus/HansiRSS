@@ -24,3 +24,8 @@ Automatically sends messages in a channel based on new entries in RSS feeds.
 `url` is the link to the RSS Feed.
 
 `user` is the ID of a user who will be tagged as the author of an article. If no ID is given, the author will be set according to the "Title" of the RSS Feed.
+
+
+### Requirements
+
+`pip install -r requirements.txt`
