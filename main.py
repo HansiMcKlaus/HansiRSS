@@ -15,11 +15,14 @@ connection.commit()
 bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 
 
+def record_article_in_db(article):
+	c.execute("INSERT INTO articles (title, link) VALUES (?, ?)", (article.title, article.link))
+	connection.commit()
+
+
 def article_in_db(entry):
 	c.execute("SELECT link FROM articles WHERE link=?", (entry.link,))
 	if c.fetchone() is None:
-		c.execute("INSERT INTO articles (title, link) VALUES (?, ?)", (entry.title, entry.link))
-		connection.commit()
 		return False
 	else:
 		return True
@@ -69,6 +72,7 @@ async def post_new_articles():
 	for article in new_articles:
 		message = format_to_message(article)
 		await channel.send(message)
+		record_article_in_db(article["article"])
 
 
 if __name__ == "__main__":
